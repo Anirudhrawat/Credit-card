@@ -33,18 +33,33 @@ export class App extends Component {
         });
       });
   }
+
+  sendSMS = (data) => {    
+    console.log("You are here" + data)
+    fetch('http://localhost:3001/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      //body: JSON.stringify(),
+    })
+    .then(response => console.log(response.json()))
+    .then(data => console.log(data))
+    .catch(error => console.error(error));  
+  }
+
   render() {
     if(!this.state.isPopup){
       return (
       <>
         {this.state.loading && <Loading/>}
         <Starter onChildChange={this.handleChildChange} onStateChange={this.handleChildStateChange}/>
-        <MainPage Name={this.state.Name} Phone={this.state.Phone} Balance={this.state.Balance} Withdrawn={this.state.Withdrawn}/>
+        <MainPage  sendSMS = {this.sendSMS}/>
       </>
       );
     }
     else {
-      return <><MainPage/></>;
+      return <><MainPage sendSMS = {this.sendSMS}/></>;
     }
   }
 }
