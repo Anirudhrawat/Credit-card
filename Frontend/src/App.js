@@ -39,7 +39,7 @@ export class App extends Component {
       <>
         {this.state.loading && <Loading/>}
         <Starter onChildChange={this.handleChildChange} onStateChange={this.handleChildStateChange}/>
-        <MainPage/>
+        <MainPage Name={this.state.Name} Phone={this.state.Phone} Balance={this.state.Balance} Withdrawn={this.state.Withdrawn}/>
       </>
       );
     }

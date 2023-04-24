@@ -4,6 +4,7 @@ import ATMimg from '../../Photos/atmpin.png';
 import Fingerprintimg from '../../Photos/fingerprint.svg';
 import {FingerprintOption, FingerprintValidation, ATM} from '../Index';
 
+const API_URL = "http://localhost:3001"
 
 class MainPage extends Component {
   constructor(props){
@@ -42,6 +43,24 @@ class MainPage extends Component {
         paymentApproveMessage: "Transaction approved",
         fingerprintResult: null,
         paymentApprove: true
+      },()=>{
+        const user = {
+          Name: this.props.Name,
+          Phone: this.props.Phone,
+          Balance: this.props.Balance,
+          Withdrawn: this.props.Withdrawn,
+        }
+        console.log("This is user: " + user);
+        fetch(API_URL + "/api", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(user)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
       });
     }
     if(this.state.fingerprintResult==false) {
