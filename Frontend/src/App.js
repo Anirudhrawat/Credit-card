@@ -36,12 +36,18 @@ export class App extends Component {
 
   sendSMS = (data) => {    
     console.log("You are here" + data)
+    const user = {
+      Name: this.state.Name,
+      Phone: this.state.Phone,
+      Balance: this.state.Balance,
+      Withdrawn: this.state.Withdrawn
+    }
     fetch('http://localhost:3001/', {
-      method: 'GET',
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      //body: JSON.stringify(),
+      body: JSON.stringify(user),
     })
     .then(response => console.log(response.json()))
     .then(data => console.log(data))

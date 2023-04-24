@@ -23,20 +23,19 @@ class MainPage extends Component {
       paymentApproveMessage: "",
       paymentApprove: false,
       error: false,
+      
     };
   }
 
   // -------------------------------------------------------------
   // Fingerprint
   fingerprintModalOpen = () => {
-    //  g("Helli");
     this.setState({
       fingerprintCheck: true
     });
   }
 
   fingerprintModalClose = () => {
-    //  g("It should close");
     if(this.state.fingerprintResult){
       this.setState({
         paymentApproveMessage: "Transaction approved",
@@ -57,11 +56,8 @@ class MainPage extends Component {
     }
 
   setResultFingerprint = (data) => {
-    //  g("setResultFingerprint received data:", data);
     this.setState({
         fingerprintResult: data
-    }, () => {
-        //  g("fingerprintResult state:", this.state.fingerprintResult);
     });
 } 
 
@@ -92,7 +88,6 @@ setResultATM = (data) =>{
       paymentApproveMessage: "Transaction approved",
       errorMessage: "" ,
     });
-    console.log("Its all chill2");
     const {sendSMS} = this.props;
     sendSMS(true);
   }

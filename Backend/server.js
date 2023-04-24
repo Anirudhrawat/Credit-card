@@ -1,29 +1,46 @@
 const express = require('express');
 const cors = require('cors');
-// const bodyParser = require("body-parser");
+bodyParser = require("body-parser");
 
+const messageSend = false;
 const app = express();
 
-app.use(express.json());
-
+//app.use(express.json());
+app.use(bodyParser.json());
 // app.use(bodyParser.json());
-app.use(cors);
+//app.use(cors);
+// Allow requests from any origin
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+  });
+  
+  // Handle preflight requests
+  app.options('*', (req, res) => {
+    // Allowed HTTP methods
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  
+    // Allowed headers
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+    res.status(204).send();
+  });
 
-app.get("/", (req, res) => {
-    console.log(req.body);
-    console.log(req.body.Name);
-
+app.post("/", (req, res) => {
+    if(!messageSend){
+    const {Name, Phone, Balance, Withdrawn} = req.body;
+    console.log(Name,Phone,Balance,Withdrawn);
     const accountSid = "AC9a90b8b123a70bd07f34ff989f934fc5";
     const authToken = "a6cd5b221b7722cc23b26f7e064040f2";
     const client = require("twilio")(accountSid, authToken);
         client.messages
         .create({
-            body: 'Hello from twilio-node',
-            to: '+15625786156', // Text your number
+            body: `Hello ${Name}, you have withdrawn $${Withdrawn}. Your remaining balance is $${Balance}`,
+            to: `+1${Phone}`, // Text your number
             from: '+18336181230', // From a valid Twilio number
         })
-        .then((message) => console.log(message.sid));
-        res.send("Request received");
+        .then(messageSend = !messageSend);
+    }
 });
 
 app.listen(3001, () => {
