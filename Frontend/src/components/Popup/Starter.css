@@ -1,0 +1,103 @@
+.modalBackground_starter {
+    background-color: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.modalContainer_starter{
+    padding-top: 7%;
+    padding-bottom: 7%;
+    padding-left: 10%;
+    padding-right: 10%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    animation: modal-enter 0.2s ease-out;
+    background-color: aliceblue;
+}
+
+.title_starter{
+    top: 6%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-family);
+    font-size: 28px;
+    letter-spacing: 1px;
+    word-spacing: 0.2px;
+    color: #09060f;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
+}
+
+@keyframes modal-enter {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -60%);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+.modalContainer_starter button{
+    font-family: var(--font-family);
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 25px;
+}
+
+
+form label{
+font-family: var(--font-family);
+flex: 1;
+padding: 5px; /* adds 10px padding to all sides of input fields, select menus, and textareas */
+}
+
+form .row_starter {
+  font-family: var(--font-family);
+padding: 9px;
+display: flex;
+align-items: center;
+}
+
+form input{
+font-family: var(--font-family);
+padding: 3px 3px 3px 0;
+width: 200px;
+margin-left: 10px;
+}
+
+form span{
+  font-family: var(--font-family);
+ position: relative;
+ margin-bottom: -1% 0 0 120%;
+ pointer-events: none;
+}
+
+.info_starter {
+  font-family: var(--font-family);
+  background-color: #e7f3fe;
+  border-left: 6px solid #2196F3;
+  margin-left: 2.3%;
+  margin-right: -3%;
+  margin-top: 3%;
+}
+
+.p-inner_starter{
+  font-family: var(--font-family);
+  margin-left: 11.5%;
+}
+
+.error-row_starter{
+  padding-left: 30%;
+}
