@@ -10,7 +10,8 @@ export class App extends Component {
       Phone: "",
       Balance: "",
       Withdrawn: "",
-      loading: false
+      loading: false,
+      insufficientBalance: null,
     }
   }
   handleChildChange = () => {
@@ -29,7 +30,8 @@ export class App extends Component {
       Withdrawn: childState.withdrawn
       },()=>{
         this.setState({ 
-          loading: false // set loading to false in the setState callback function
+          loading: false, // set loading to false in the setState callback function
+          insufficientBalance: this.state.Withdrawn > this.state.Balance? true:false
         });
       });
   }
@@ -40,7 +42,8 @@ export class App extends Component {
       Name: this.state.Name,
       Phone: this.state.Phone,
       Balance: this.state.Balance,
-      Withdrawn: this.state.Withdrawn
+      Withdrawn: this.state.Withdrawn,
+      InsufficientBalance : this.state.insufficientBalance
     }
     fetch('http://localhost:3001/', {
       method: 'POST',
@@ -60,12 +63,12 @@ export class App extends Component {
       <>
         {this.state.loading && <Loading/>}
         <Starter onChildChange={this.handleChildChange} onStateChange={this.handleChildStateChange}/>
-        <MainPage  sendSMS = {this.sendSMS}/>
+        <MainPage insufficientBalance={this.state.insufficientBalance} sendSMS = {this.sendSMS}/>
       </>
       );
     }
     else {
-      return <><MainPage sendSMS = {this.sendSMS}/></>;
+      return <><MainPage insufficientBalance={this.state.insufficientBalance}  sendSMS = {this.sendSMS}/></>;
     }
   }
 }

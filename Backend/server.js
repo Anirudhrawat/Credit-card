@@ -28,19 +28,33 @@ app.use((req, res, next) => {
 
 app.post("/", (req, res) => {
     if(!messageSend){
-    const {Name, Phone, Balance, Withdrawn} = req.body;
-    console.log(Name,Phone,Balance,Withdrawn);
+      const {Name, Phone, Balance, Withdrawn, InsufficientBalance} = req.body;
+      console.log("Node here"+InsufficientBalance);
+    //console.log(Name,Phone,Balance,Withdrawn);
     const accountSid = "AC9a90b8b123a70bd07f34ff989f934fc5";
     const authToken = "a6cd5b221b7722cc23b26f7e064040f2";
-    const client = require("twilio")(accountSid, authToken);
+    if (!InsufficientBalance){
+      const client = require("twilio")(accountSid, authToken);
         client.messages
         .create({
-            body: `Hello ${Name}, you have withdrawn $${Withdrawn}. Your remaining balance is $${Balance}`,
+            body: `Hello ${Name}, you have withdrawn $${Withdrawn}. Your remaining balance is $${Balance-Withdrawn}`,
             to: `+1${Phone}`, // Text your number
             from: '+18336181230', // From a valid Twilio number
         })
         .then(messageSend = !messageSend);
     }
+
+    else{
+      const client = require("twilio")(accountSid, authToken);
+        client.messages
+        .create({
+            body: `Hello ${Name}, you are trying to withdraw $${Withdrawn}. Your balance is $${Balance}. You have insufficient balance.`,
+            to: `+1${Phone}`, // Text your number
+            from: '+18336181230', // From a valid Twilio number
+        })
+        .then(messageSend = !messageSend);
+    }
+  }
 });
 
 app.listen(3001, () => {

@@ -37,14 +37,27 @@ class MainPage extends Component {
 
   fingerprintModalClose = () => {
     if(this.state.fingerprintResult){
-      this.setState({
-        paymentApproveMessage: "Transaction approved",
-        fingerprintResult: null,
-        paymentApprove: true
-      },()=>{
-      console.log("Its all chill1"+this.props);
-      this.props.sendSMS(true);
-    });
+      if(!this.props.insufficientBalance)
+      {
+          this.setState({
+            paymentApproveMessage: "Transaction approved",
+            fingerprintResult: null,
+            paymentApprove: true
+          },()=>{
+          console.log("Its all chill1"+this.props);
+          this.props.sendSMS(true);
+        });
+      }
+      else{
+        this.setState({
+            paymentApproveMessage: "Insufficient Balance",
+            fingerprintResult: null,
+            paymentApprove: true
+          },()=>{
+          console.log("Its all chill1"+this.props);
+          this.props.sendSMS(true);
+        });
+      }
     }
     if(this.state.fingerprintResult==false) {
       this.setState({
@@ -83,13 +96,25 @@ PINModalClose = () => {
 
 setResultATM = (data) =>{
   if(data) {
-    this.setState({
-      paymentApprove: true,
-      paymentApproveMessage: "Transaction approved",
-      errorMessage: "" ,
-    });
-    const {sendSMS} = this.props;
-    sendSMS(true);
+    if(!this.props.insufficientBalance)
+    {
+        this.setState({
+          paymentApprove: true,
+          paymentApproveMessage: "Transaction approved",
+          errorMessage: "" ,
+        });
+        const {sendSMS} = this.props;
+        sendSMS(true);
+    }
+    else{
+      this.setState({
+          paymentApprove: true,
+          paymentApproveMessage: "Insufficient Balance",
+          errorMessage: "" ,
+        });
+        const {sendSMS} = this.props;
+        sendSMS(true);
+    }
   }
   if(!data) {
     this.setState(prev => ({
