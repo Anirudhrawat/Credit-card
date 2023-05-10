@@ -31,7 +31,7 @@ export class App extends Component {
       },()=>{
         this.setState({ 
           loading: false, // set loading to false in the setState callback function
-          insufficientBalance: this.state.Withdrawn > this.state.Balance? true:false
+          insufficientBalance: parseInt(this.state.Withdrawn) > parseInt(this.state.Balance)? true:false
         });
       });
   }
